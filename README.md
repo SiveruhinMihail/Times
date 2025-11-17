@@ -24,11 +24,11 @@ Times/
 
 ## 📦 Project Structure
 
-| Module       | Description                              | Repository                                                               |
-| ------------ | ---------------------------------------- | ------------------------------------------------------------------------ |
-| **Backend**  | REST API, database layer, authentication | [Taskly-backend](https://github.com/Siveruhinthail/Taskly-backend.git)   |
-| **Frontend** | Web interface, user dashboard            | [Taskly-frontend](https://github.com/Siveruhinthail/Taskly-frontend.git) |
-| **Files**    | File uploads, storage management         | [Taskly-files](https://github.com/Siveruhinthail/Taskly-files.git)       |
+| Module       | Description                              | Repository                                                              |
+| ------------ | ---------------------------------------- | ----------------------------------------------------------------------- |
+| **Backend**  | REST API, database layer, authentication | [Times-backend](https://github.com/Siveruhinthail/Taskly-backend.git)   |
+| **Frontend** | Web interface, user dashboard            | [Times-frontend](https://github.com/Siveruhinthail/Taskly-frontend.git) |
+| **Files**    | File uploads, storage management         | [Times-files](https://github.com/Siveruhinthail/Taskly-files.git)       |
 
 ## 🛠️ Quick Start
 

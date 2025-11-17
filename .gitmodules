@@ -1,9 +1,9 @@
 [submodule "backend"]
 	path = backend
-	url = https://github.com/SiveruhinMihail/Taskly-backend.git
+	url = https://github.com/SiveruhinMihail/Times-backend.git
 [submodule "frontend"]
 	path = frontend
-	url = https://github.com/SiveruhinMihail/Taskly-frontend.git
+	url = https://github.com/SiveruhinMihail/Times-frontend.git
 [submodule "files"]
 	path = files
-	url = https://github.com/SiveruhinMihail/Taskly-Files.git
+	url = https://github.com/SiveruhinMihail/Times-Files.git

@@ -4,6 +4,6 @@
 [submodule "frontend"]
 	path = frontend
 	url = https://github.com/SiveruhinMihail/Times-frontend.git
-[submodule "files"]
+[submodule "files-service"]
 	path = files-service
 	url = https://github.com/SiveruhinMihail/Times-Files.git

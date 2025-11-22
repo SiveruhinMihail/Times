@@ -1,0 +1,102 @@
+services:
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 89450
+      MONGO_INITDB_DATABASE: taskly
+    volumes:
+      - mongodb_data:/data/db
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_DB: times_files
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=89450
+      - MONGO_DATABASE=taskly
+      - MONGO_PORT=27017
+      - JWT_ACCESS_SECRET=5f4dcc3b5aa765d61d8327deb882cf99
+      - JWT_REFRESH_SECRET=5f4dcc3b32138092831d8327deb882cf99
+      - FILES_SERVICE_URL=http://files-app:8080
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongodb
+
+  files-app:
+    build: ./files-service
+    container_name: files-app
+    ports:
+      - "8080:8080"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8080
+      - MAIN_API=http://backend:3001
+      - OPENAPI_URL=http://localhost:8080/openapi.json
+      - ACCESS_TOKEN_LT=5
+      - REFRESH_TOKEN_LT=60
+      - JWT_SECRET_KEY=GJHBDRNJFKDFM32NRVD94G9DSJ
+      - ENCRYPT_ALG=HS256
+      - DATABASE_URL=postgresql://user:password@postgres:5432/times_files
+    volumes:
+      - files_data:/application/files
+    depends_on:
+      - postgres
+      - backend
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=3000
+      - NUXT_PUBLIC_API_URL=http://localhost:3001/api/
+      - NUXT_PUBLIC_FILES_URL=http://localhost:8080
+    depends_on:
+      - backend
+      - files-app
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+      - backend
+      - files-app
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  mongodb_data:
+  postgres_data:
+  files_data:

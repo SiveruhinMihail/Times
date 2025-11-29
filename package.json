@@ -1,0 +1,12 @@
+{
+  "name": "your-project",
+  "version": "1.0.0",
+  "scripts": {
+    "docker:prod": "docker-compose -f docker-compose.yml up",
+    "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
+    "docker:frontend": "docker-compose -f docker-compose.yml -f docker-compose.frontend-dev.yml up",
+    "docker:backend": "docker-compose -f docker-compose.yml -f docker-compose.backend-dev.yml up",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build"
+  }
+}
